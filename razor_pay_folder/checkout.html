@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Razorpay Payment</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <button id="pay-btn">Pay Now</button>
+    <script>
+        // Replace with your key_id
+        const razorpayKey = "rzp_test_DfhbmLCnKJDWxO";
+        
+        document.getElementById('pay-btn').onclick = function(e) {
+            e.preventDefault();
+
+            fetch('/create_order.php') // Adjust the path if needed
+                .then(response => response.json())
+                .then(data => {
+                    const options = {
+                        "key": razorpayKey,
+                        "amount": "50000", // Amount in paise
+                        "currency": "INR",
+                        "name": "Your Company Name",
+                        "description": "Test Transaction",
+                        "order_id": data.order_id,
+                        "handler": function(response) {
+                            fetch('/verify_payment.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_signature: response.razorpay_signature
+                                })
+                            }).then(response => response.json())
+                              .then(data => alert(data.message))
+                              .catch(error => console.error('Error:', error));
+                        },
+                        "prefill": {
+                            "name": "Customer Name",
+                            "email": "customer@example.com",
+                            "contact": "9999999999"
+                        }
+                    };
+
+                    const rzp = new Razorpay(options);
+                    rzp.open();
+                });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+# Ignore Composer dependency directory
+/vendor/
+/cashfree_testing/
+/testing_folder/
+
+# Ignore environment variable files
+/.env
+
+# Ignore sensitive files like callback scripts
+google_callback.php
+
+# Ignore log files
+*.log
+
+# Ignore temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Ignore compiled PHP files
+*.phar
+
+# Ignore system files (macOS, Windows, etc.)
+.DS_Store
+Thumbs.db
+
+# Ignore IDE/editor config files
+/.idea/
+/.vscode/
+
+# Ignore node_modules if you're using front-end tools like npm/yarn
+/node_modules/
+
+# Ignore PHPUnit/PHPCS etc. coverage files
+/coverage/
+
+# Ignore cache directories
+/cache/
+/storage/
+
+# Ignore build directories if any
+/build/
+/dist/
+
+# Ignore the database dump files
+*.sql
+*.sqlite
+
+# Ignore vendor lock files
+composer.lock
